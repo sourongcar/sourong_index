@@ -1,19 +1,25 @@
 package com.sourongindex.consultant.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import org.junit.Test;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.base.common.domain.CurrentUser;
 import com.base.common.domain.JsonResult;
+import com.base.common.util.ConfigUtil;
 import com.base.datatables.domain.DataTablesRequest;
 import com.base.datatables.domain.DataTablesResponse;
 import com.sourongindex.abountsourong.domain.AboutsourongVO;
@@ -51,27 +57,72 @@ public class ConsultantController {
 		if(consultantid!=null){
 			map.addAttribute("entity",service.get(consultantid));
 		}
+		//获取所有公司
+		List<CompanyinfomVO> companys = companyService.list();
+		System.out.println(companys);
+		map.addAttribute("companys",companys);
 		return "consultant/edit";//跳转到编辑页面
 	}
 	
-	@RequestMapping("/doEdit")
-	public String doEdit(ConsultantVO entity){
-		CurrentUser user = CurrentUser.getInstance();
-		//entity.setCreatorUserId(user.getUserId());//创建者id
+	@RequestMapping(value="/doEdit",method=RequestMethod.POST,consumes={"multipart/form-data"})
+	public @ResponseBody JsonResult doEdit(ConsultantVO entity,@RequestParam("pic")MultipartFile file) throws IOException{
+		JsonResult js = new JsonResult();
+		String saveImage = ConfigUtil.getValue("saveImage");
+		
 		if(entity.getConsultantid()!=null){//修改
-			service.update(entity);
+			ConsultantVO consultant = service.get(entity.getConsultantid());
+			String name = consultant.getConsultantpic();
+			if (name != null) {
+				new File(ConfigUtil.getValue("saveImage") + name).delete();// 删除原先的图片
+			}
+			if (!file.isEmpty()) {
+				String orgname = file.getOriginalFilename();
+				String savename = UUID.randomUUID() + orgname.substring(orgname.lastIndexOf("."));// 保存图片的名字唯一
+				String savepath = saveImage + savename;
+				System.out.println(savepath);
+				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(savepath));// 图片存放位置
+				file.transferTo(new File(savepath));
+				entity.setConsultantpic(savename);
+			}
+			if (service.update(entity) > 0) {// 修改成功
+				js.setStatus(1);
+				js.setMsg("修改成功！");
+
+			} else {
+				js.setStatus(0);
+				js.setMsg("修改失败！");
+			}
 		}else{//新增
-			service.add(entity);
+			if (!file.isEmpty()) {
+				String orgname = file.getOriginalFilename();
+				String savename = UUID.randomUUID() + orgname.substring(orgname.lastIndexOf("."));// 保存图片的名字唯一
+				String savepath = saveImage + savename;
+				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(savepath));// 图片存放位置
+				file.transferTo(new File(savepath));
+				entity.setConsultantpic(savename);
+			}
+			if (service.add(entity) > 0) {// 新增成功
+				js.setStatus(1);
+				js.setMsg("新增成功！");
+
+			} else {
+				js.setStatus(0);
+				js.setMsg("新增失败！");
+			}
 		}
-		return "redirect:/consultant/list.action";//跳转到列表页面
+		return js;//返回编辑状态
 	}
 	
 	@RequestMapping("/rest/doDelete")
 	public @ResponseBody JsonResult doDelete(Integer id){
 		JsonResult rs=new JsonResult();
-		service.delete(id);
-		rs.setStatus(1);
-		rs.setMsg("删除成功！");
+		if(service.delete(id)>0){
+			rs.setStatus(1);
+			rs.setMsg("删除成功！");
+		}else{
+			rs.setStatus(0);
+			rs.setMsg("删除失败！");
+		}
 		return rs;
 	}
 	
@@ -96,7 +147,6 @@ public class ConsultantController {
 		CreateHtml html=new CreateHtml();
 		Map<String, Object> root=new HashMap<String, Object>();
 		List<ConsultantVO> list=service.list();
-		System.out.println(list);
 		CompanyinfomVO company=companyService.get(1);
 		List<ServiceideaVO> idealist=ideaService.list();
 		AboutsourongVO about=aboutService.get(1);
@@ -109,11 +159,7 @@ public class ConsultantController {
 		root.put("servicePhone",company.getServicephone());
 		root.put("serviceTime", company.getServicetime());
 		root.put("companyaddress", company.getCompanyaddress());
-		root.put("detailaddress", company.getDetailaddress());
-		root.put("companyqr",company.getCompanyqr());
-		root.put("companylogo", company.getCompanylogo());
-		root.put("title", about.getTitle());
-		root.put("aboutpic", about.getPicname());
+		root.put("companyqr", company.getCompanyqr());
 		root.put("specificDescribe", about.getSpecificdescribe());
 		html.exportHtml("home", root, "home.html");
 		return "consultant/succeed";

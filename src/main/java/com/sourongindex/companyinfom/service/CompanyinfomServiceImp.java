@@ -1,7 +1,10 @@
 package com.sourongindex.companyinfom.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.base.common.util.SearchConditionUtils;
 import com.base.datatables.domain.DataTablesRequest;
 import com.base.datatables.domain.DataTablesResponse;
@@ -62,6 +65,13 @@ public class CompanyinfomServiceImp implements CompanyinfomService {
 		response.setData(mapper.selectByExample(example));
 		return response;
 		
+	}
+	
+	@Override
+	public List<CompanyinfomVO> list() {
+		CompanyinfomVOExample exmaple=new CompanyinfomVOExample();
+		exmaple.createCriteria();
+		return mapper.selectByExample(exmaple);
 	}
 
 }

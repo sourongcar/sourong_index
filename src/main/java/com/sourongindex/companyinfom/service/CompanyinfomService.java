@@ -1,5 +1,7 @@
 package com.sourongindex.companyinfom.service;
 
+import java.util.List;
+
 import com.base.datatables.domain.DataTablesRequest;
 import com.base.datatables.domain.DataTablesResponse;
 import com.sourongindex.companyinfom.domain.CompanyinfomVO;
@@ -36,6 +38,13 @@ public interface CompanyinfomService {
 	 * @return
 	 */
 	public DataTablesResponse<CompanyinfomVO> listByPage(DataTablesRequest request) throws Throwable;
+	
+	/**
+	 * 查询
+	 * @param 
+	 * @return
+	 */
+	public List<CompanyinfomVO> list();
 	
 	
 }
