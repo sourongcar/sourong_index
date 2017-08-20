@@ -25,7 +25,7 @@
 				<button type="button" class="btn btn-default" id="search">查询</button>
 
 				<a href="${path }/consultant/edit.action" class="btn btn-primary"
-					id="add">新增</a> <a href="${path }/consultant/tohtml.action"
+					id="add">新增</a> <a href="${path }/create/html.action"
 					class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">

@@ -16,7 +16,7 @@
 		<div class="col-xs-12">
 			<div>
 				<a  href="${path }/serviceidea/edit.action" class="btn btn-primary" id="add">新增</a>
-				<a href="${path }/consultant/tohtml.action" class="btn btn-primary">生成新的页面</a>
+				<a href="${path }/create/html.action" class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">
 				<table id="mydatatables"
