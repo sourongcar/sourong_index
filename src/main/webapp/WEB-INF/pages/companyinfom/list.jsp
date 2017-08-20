@@ -15,29 +15,22 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div>
-				<input type="text" class="form-control-static" id="xxx"
-					placeholder="请输入xxx">
-					
-				<button type="button" class="btn btn-default" id="search">查询</button>
 				
-				<a  href="${path }/companyinfom/edit.action" class="btn btn-primary" id="add">新增</a>
-				<a href="${path }/consultant/tohtml.action" class="btn btn-primary">生成新的页面</a>
+				
+				<a href="${path }/create/html.action.action" class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">
 				<table id="mydatatables"
 					class="table table-striped table-bordered table-hover">
 					<thead>
-						<tr>
-						   
-							<th>companyid</th>
-							<th>companyname</th>
-							<th>servicephone</th>
-							<th>servicetime</th>
-							<th>companyaddress</th>
-							<th>companylogo</th>
-							<th>companyqr</th>
-							<th>createtime</th>
-							<th>lasttime</th>
+						<tr>				   
+							<th>公司名称</th>
+							<th>服务电话</th>
+							<th>服务时间</th>
+							<th>公司地址</th>
+							<th>详细地址</th>
+							<th>公司logo</th>
+							<th>公众号二维码</th>		
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -48,6 +41,50 @@
 			</div>
 		</div>
 	</div>
+	<!-- 图片模态框（Modal） -->
+<div class="modal fade" id="logo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            	<form class="form-horizontal" role="form" action="" method="post" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">公司logo</h4>
+            </div>
+            <div class="modal-body">
+			<div class="form-group">
+				<img id="modellogo" src=""  style="max-height: 500px;max-width: 500px;display:block;margin: 0 auto" alt="这里是图片"  />
+			</div>	
+			</div>			
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		            </div>
+			 </form>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div>
+<!-- /.modal -->
+<!-- 图片模态框（Modal） -->
+<div class="modal fade" id="qr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            	<form class="form-horizontal" role="form" action="" method="post" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">公司二维码</h4>
+            </div>
+            <div class="modal-body">
+			<div class="form-group">
+				<img id="modelqr" src=""  style="max-height: 500px;max-width: 500px;display:block;margin: 0 auto" alt="这里是图片"  />
+			</div>	
+			</div>			
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		            </div>
+			 </form>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div>
+<!-- /.modal -->
 	<%@ include file="/WEB-INF/pages/common/rs_js.jsp"%>
 
 	<script type="text/javascript">
@@ -88,10 +125,8 @@
 									}
 								},
 								"columns" : [ 
-							    
-								{
-									"data" : "companyid"
-								},
+							     
+								
 								{
 									"data" : "companyname"
 								},
@@ -105,17 +140,15 @@
 									"data" : "companyaddress"
 								},
 								{
-									"data" : "companylogo"
+									"data" : "detailaddress"
+								},
+								{
+									"data" : "companylogo" 
 								},
 								{
 									"data" : "companyqr"
 								},
-								{
-									"data" : "createtime"
-								},
-								{
-									"data" : "lasttime"
-								},
+				
 								{
 									"data" : "companyid",
 									"orderable":false
@@ -124,11 +157,25 @@
 									
 										{
 											"render" : function(data, type, row) {
-												return '<p:permission privilege="com.sourongindex.companyinfom.controller.CompanyinfomController:doEdit"><a href="${path }/companyinfom/edit.action?companyid='+data+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
-												+'<p:permission privilege="com.sourongindex.companyinfom.controller.CompanyinfomController:doDelete"><a href="javascript:void(0)" onclick="del(\''+data+'\')" class="tooltip-error" data-rel="tooltip" title="删除"><span class="red"><i class="icon-trash bigger-120"></i></a></p:permission>';
+												return '<p:permission privilege="com.sourongindex.companyinfom.controller.CompanyinfomController:doEdit"><a href="${path }/companyinfom/edit.action?companyid='+row.companyid+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
+												
 											},
-											"targets" : 9
-										} ],
+											"targets" : 7
+										},
+										{
+											"render" : function(data, type, row) {
+												return  '<div data-toggle="modal" data-target="#logo" onclick="logoclick(\''+row.companylogo+'\')"><img id="logoimg" src="/img/'+row.companylogo+'"  width="80px" height="50px" alt="图片加载不了。。。"/></div>';
+												
+											},
+											"targets" : 5
+										},
+										{
+											"render" : function(data, type, row) {
+												return  '<div data-toggle="modal" data-target="#qr" onclick="qrclick(\''+row.companyqr+'\')"><img id="logoimg" src="/img/'+row.companyqr+'"  width="50px" height="50px" alt="图片加载不了。。。"/></div>';
+												
+											},
+											"targets" : 6
+										}],
 
 								"language" : {
 									"url" : "${path }/resources/assets/language/zh_CN.txt"
@@ -141,24 +188,18 @@
 				mydatatables.ajax.reload();
 			});
 			
-			$("#xxx").keydown(function(e) {
-				if(e.keyCode==13){
-					mydatatables.ajax.reload();
-				}
-			});
+			
 
 		});
 		
-		function del(companyid){
-			if(window.confirm("你确定要删除？")){
-				$.getJSON("${path }/companyinfom/rest/doDelete.action?companyid="+companyid,
-							function(data){
-						alert(data.msg);
-						if(data.status==1){
-							mydatatables.ajax.reload();
-						}
-					});
-			}
+	
+		function logoclick(companylogo){
+			var asd="/img/"+companylogo;
+			$("#modellogo").attr("src",asd);									
+		}
+		function qrclick(companyqr){
+			var asd="/img/"+companyqr;
+			$("#modelqr").attr("src",asd);									
 		}
 	</script>
 </body>

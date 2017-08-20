@@ -725,6 +725,76 @@ public class CompanyinfomVOExample implements Serializable {
             addCriterion("lastTime not between", value1, value2, "lasttime");
             return (Criteria) this;
         }
+
+        public Criteria andDetailaddressIsNull() {
+            addCriterion("detailaddress is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressIsNotNull() {
+            addCriterion("detailaddress is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressEqualTo(String value) {
+            addCriterion("detailaddress =", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressNotEqualTo(String value) {
+            addCriterion("detailaddress <>", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressGreaterThan(String value) {
+            addCriterion("detailaddress >", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressGreaterThanOrEqualTo(String value) {
+            addCriterion("detailaddress >=", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressLessThan(String value) {
+            addCriterion("detailaddress <", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressLessThanOrEqualTo(String value) {
+            addCriterion("detailaddress <=", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressLike(String value) {
+            addCriterion("detailaddress like", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressNotLike(String value) {
+            addCriterion("detailaddress not like", value, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressIn(List<String> values) {
+            addCriterion("detailaddress in", values, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressNotIn(List<String> values) {
+            addCriterion("detailaddress not in", values, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressBetween(String value1, String value2) {
+            addCriterion("detailaddress between", value1, value2, "detailaddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailaddressNotBetween(String value1, String value2) {
+            addCriterion("detailaddress not between", value1, value2, "detailaddress");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

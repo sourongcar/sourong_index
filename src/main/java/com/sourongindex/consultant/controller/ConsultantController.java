@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -95,6 +96,7 @@ public class ConsultantController {
 		CreateHtml html=new CreateHtml();
 		Map<String, Object> root=new HashMap<String, Object>();
 		List<ConsultantVO> list=service.list();
+		System.out.println(list);
 		CompanyinfomVO company=companyService.get(1);
 		List<ServiceideaVO> idealist=ideaService.list();
 		AboutsourongVO about=aboutService.get(1);
@@ -107,7 +109,11 @@ public class ConsultantController {
 		root.put("servicePhone",company.getServicephone());
 		root.put("serviceTime", company.getServicetime());
 		root.put("companyaddress", company.getCompanyaddress());
-		root.put("companyqr", company.getCompanyqr());
+		root.put("detailaddress", company.getDetailaddress());
+		root.put("companyqr",company.getCompanyqr());
+		root.put("companylogo", company.getCompanylogo());
+		root.put("title", about.getTitle());
+		root.put("aboutpic", about.getPicname());
 		root.put("specificDescribe", about.getSpecificdescribe());
 		html.exportHtml("home", root, "home.html");
 		return "consultant/succeed";

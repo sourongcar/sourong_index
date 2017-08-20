@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>xxx列表</title>
+<title>产品概况列表</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="/WEB-INF/pages/common/rs_css.jsp"%>
 <style type="text/css">
@@ -15,13 +15,13 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div>
-				<input type="text" class="form-control-static" id="xxx"
-					placeholder="请输入xxx">
+				<input type="text" class="form-control-static" id="productname"
+					placeholder="请输入产品名称">
 					
 				<button type="button" class="btn btn-default" id="search">查询</button>
 				
 				<a  href="${path }/product/edit.action" class="btn btn-primary" id="add">新增</a>
-				<a href="${path }/consultant/tohtml.action" class="btn btn-primary">生成新的页面</a>
+				<a href="${path }/create/html.action" class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">
 				<table id="mydatatables"
@@ -29,12 +29,11 @@
 					<thead>
 						<tr>
 						
-							<th>productid</th>
-							<th>productname</th>
-							<th>productintro</th>
-							<th>icon</th>
-							<th>createtime</th>
-							<th>lasttime</th>
+							
+							<th>产品名称</th>
+							<th>产品介绍</th>
+							<th>对应图标</th>
+							
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -64,14 +63,14 @@
 								"dom": 'tiprl',//自定义显示项
 								//跟数组下标一样，第一列从0开始，这里表格初始化时，
 								//第四列默认降序
-								"order" : [ [ 0, "desc" ] ],
+								"order" : [ [ 3, "desc" ] ],
 								"ajax" : {
 									"url" : "${path }/product/rest/doSearch.action",
 									"type" : "POST",
 									"data" : function(pdata) {
 										
 										pdata.searchColumns={
-												"xxxLike":$("#xxx").val()
+												"ProductnameLike":$("#productname").val()
 										}
 										var data = JSON.stringify(pdata);
 										//JSON.parse();
@@ -86,9 +85,7 @@
 								},
 								"columns" : [ 
 							   
-								{
-									"data" : "productid"
-								},
+								
 								{
 									"data" : "productname"
 								},
@@ -97,13 +94,7 @@
 								},
 								{
 									"data" : "icon"
-								},
-								{
-									"data" : "createtime"
-								},
-								{
-									"data" : "lasttime"
-								},
+								},	
 								{
 									"data" : "productid",
 									"orderable":false
@@ -112,11 +103,18 @@
 									
 										{
 											"render" : function(data, type, row) {
-												return '<p:permission privilege="com.sourongindex.product.controller.ProductController:doEdit"><a href="${path }/product/edit.action?productid='+data+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
-												+'<p:permission privilege="com.sourongindex.product.controller.ProductController:doDelete"><a href="javascript:void(0)" onclick="del(\''+data+'\')" class="tooltip-error" data-rel="tooltip" title="删除"><span class="red"><i class="icon-trash bigger-120"></i></a></p:permission>';
+												return '<p:permission privilege="com.sourongindex.product.controller.ProductController:doEdit"><a href="${path }/product/edit.action?productid='+row.productid+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
+												+'<p:permission privilege="com.sourongindex.product.controller.ProductController:doDelete"><a href="javascript:void(0)" onclick="del(\''+row.productid+'\')" class="tooltip-error" data-rel="tooltip" title="删除"><span class="red"><i class="icon-trash bigger-120"></i></a></p:permission>';
 											},
-											"targets" : 6
-										} ],
+											"targets" : 3
+										},
+										{
+											"render" : function(data, type, row) {
+												return '<div><img id="banner" src="/img/'+row.icon+'"  width="50px" height="50px" alt="图片加载不了。。。"/></div>';
+											},
+											"targets" : 2
+										},
+										],
 
 								"language" : {
 									"url" : "${path }/resources/assets/language/zh_CN.txt"
@@ -129,11 +127,7 @@
 				mydatatables.ajax.reload();
 			});
 			
-			$("#xxx").keydown(function(e) {
-				if(e.keyCode==13){
-					mydatatables.ajax.reload();
-				}
-			});
+		
 
 		});
 		

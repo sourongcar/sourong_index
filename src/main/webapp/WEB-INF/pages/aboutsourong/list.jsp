@@ -15,13 +15,13 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div>
-				<input type="text" class="form-control-static" id="xxx"
-					placeholder="请输入xxx">
+				<input type="text" class="form-control-static" id="title"
+					placeholder="请输入标题">
 					
 				<button type="button" class="btn btn-default" id="search">查询</button>
 				
-				<a  href="${path }/aboutsourong/edit.action" class="btn btn-primary" id="add">新增</a>
-				<a href="${path }/consultant/tohtml.action" class="btn btn-primary">生成新的页面</a>
+		
+				<a href="${path }/create/html.action" class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">
 				<table id="mydatatables"
@@ -29,12 +29,9 @@
 					<thead>
 						<tr>
 						    
-							<th>sourongid</th>
-							<th>picname</th>
-							<th>title</th>
-							<th>specificdescribe</th>
-							<th>createtime</th>
-							<th>lasttime</th>
+	       				   <th>图片名</th>
+							<th>大标题</th>
+							<th>具体描述</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -45,6 +42,28 @@
 			</div>
 		</div>
 	</div>
+	<!-- 图片模态框（Modal） -->
+<div class="modal fade" id="lookpic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            	<form class="form-horizontal" role="form" action="" method="post" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">图片</h4>
+            </div>
+            <div class="modal-body">
+			<div class="form-group">
+				<img id="modelpic" src=""  style="max-height: 500px;max-width: 500px;display:block;margin: 0 auto" alt="这里是图片"  />
+			</div>	
+			</div>			
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		            </div>
+			 </form>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div>
+<!-- /.modal -->
 	<%@ include file="/WEB-INF/pages/common/rs_js.jsp"%>
 
 	<script type="text/javascript">
@@ -71,7 +90,7 @@
 									"data" : function(pdata) {
 										
 										pdata.searchColumns={
-												"xxxLike":$("#xxx").val()
+												"TitleLike":$("#title").val()
 										}
 										var data = JSON.stringify(pdata);
 										//JSON.parse();
@@ -86,9 +105,7 @@
 								},
 								"columns" : [ 
 							     
-								{
-									"data" : "sourongid"
-								},
+								
 								{
 									"data" : "picname"
 								},
@@ -98,12 +115,7 @@
 								{
 									"data" : "specificdescribe"
 								},
-								{
-									"data" : "createtime"
-								},
-								{
-									"data" : "lasttime"
-								},
+								
 								{
 									"data" : "sourongid",
 									"orderable":false
@@ -112,11 +124,19 @@
 									
 										{
 											"render" : function(data, type, row) {
-												return '<p:permission privilege="com.sourongindex.aboutsourong.controller.AboutsourongController:doEdit"><a href="${path }/aboutsourong/edit.action?sourongid='+data+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
-												+'<p:permission privilege="com.sourongindex.aboutsourong.controller.AboutsourongController:doDelete"><a href="javascript:void(0)" onclick="del(\''+data+'\')" class="tooltip-error" data-rel="tooltip" title="删除"><span class="red"><i class="icon-trash bigger-120"></i></a></p:permission>';
+												return '<p:permission privilege="com.sourongindex.aboutsourong.controller.AboutsourongController:doEdit"><a href="${path }/aboutsourong/edit.action?sourongid='+row.sourongid+'" class="tooltip-success" data-rel="tooltip" title="修改"><span class="green"><i class="icon-edit bigger-120"></i></a></p:permission>&nbsp;&nbsp;'
+												
 											},
-											"targets" : 6
-										} ],
+											"targets" : 3
+										},
+										{
+											"render" : function(data, type, row) {
+												return '<div data-toggle="modal" data-target="#lookpic" onclick="look(\''+row.picname+'\')"><img id="banner" src="/img/'+row.picname+'"  width="50px" height="50px" alt="图片加载不了。。。"/></div>';
+												
+											},
+											"targets" : 0
+										}
+										],
 
 								"language" : {
 									"url" : "${path }/resources/assets/language/zh_CN.txt"
@@ -129,11 +149,7 @@
 				mydatatables.ajax.reload();
 			});
 			
-			$("#xxx").keydown(function(e) {
-				if(e.keyCode==13){
-					mydatatables.ajax.reload();
-				}
-			});
+			
 
 		});
 		
@@ -147,6 +163,10 @@
 						}
 					});
 			}
+		}
+		function look(picname){
+			var asd="/img/"+picname;
+			$("#modelpic").attr("src",asd);									
 		}
 	</script>
 </body>

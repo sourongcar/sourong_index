@@ -22,6 +22,8 @@ public class CompanyinfomVO implements Serializable {
 
     private Date lasttime;
 
+    private String detailaddress;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getCompanyid() {
@@ -96,6 +98,14 @@ public class CompanyinfomVO implements Serializable {
         this.lasttime = lasttime;
     }
 
+    public String getDetailaddress() {
+        return detailaddress;
+    }
+
+    public void setDetailaddress(String detailaddress) {
+        this.detailaddress = detailaddress == null ? null : detailaddress.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -111,6 +121,7 @@ public class CompanyinfomVO implements Serializable {
         sb.append(", companyqr=").append(companyqr);
         sb.append(", createtime=").append(createtime);
         sb.append(", lasttime=").append(lasttime);
+        sb.append(", detailaddress=").append(detailaddress);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -136,7 +147,8 @@ public class CompanyinfomVO implements Serializable {
             && (this.getCompanylogo() == null ? other.getCompanylogo() == null : this.getCompanylogo().equals(other.getCompanylogo()))
             && (this.getCompanyqr() == null ? other.getCompanyqr() == null : this.getCompanyqr().equals(other.getCompanyqr()))
             && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-            && (this.getLasttime() == null ? other.getLasttime() == null : this.getLasttime().equals(other.getLasttime()));
+            && (this.getLasttime() == null ? other.getLasttime() == null : this.getLasttime().equals(other.getLasttime()))
+            && (this.getDetailaddress() == null ? other.getDetailaddress() == null : this.getDetailaddress().equals(other.getDetailaddress()));
     }
 
     @Override
@@ -152,6 +164,7 @@ public class CompanyinfomVO implements Serializable {
         result = prime * result + ((getCompanyqr() == null) ? 0 : getCompanyqr().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
         result = prime * result + ((getLasttime() == null) ? 0 : getLasttime().hashCode());
+        result = prime * result + ((getDetailaddress() == null) ? 0 : getDetailaddress().hashCode());
         return result;
     }
 }

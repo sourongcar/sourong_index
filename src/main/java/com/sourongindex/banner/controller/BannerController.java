@@ -72,14 +72,14 @@ public class BannerController {
 	}
 	
 	@RequestMapping("/rest/doDelete")
-	public @ResponseBody JsonResult doDelete(Integer id){
+	public @ResponseBody JsonResult doDelete(Integer bannerid){
 		JsonResult rs=new JsonResult();
-		service.delete(id);
-		BannerVO banner=service.get(id);
+		BannerVO banner=service.get(bannerid);
 		String name=banner.getPicname();
 		if(name!=null){	
 			new File(ConfigUtil.getValue("saveImage")+name).delete();
 		}
+		service.delete(bannerid);
 		rs.setStatus(1);
 		rs.setMsg("删除成功！");
 		return rs;

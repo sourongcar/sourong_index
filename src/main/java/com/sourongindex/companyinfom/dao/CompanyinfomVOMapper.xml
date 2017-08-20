@@ -11,6 +11,7 @@
     <result column="companyQR" property="companyqr" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="lastTime" property="lasttime" jdbcType="TIMESTAMP" />
+    <result column="detailaddress" property="detailaddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List" >
     companyid, companyName, servicePhone, serviceTime, companyaddress, companylogo, companyQR, 
-    createTime, lastTime
+    createTime, lastTime, detailaddress
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sourongindex.companyinfom.domain.CompanyinfomVOExample" >
     select
@@ -115,12 +116,12 @@
   <insert id="insert" parameterType="com.sourongindex.companyinfom.domain.CompanyinfomVO" useGeneratedKeys="true" keyProperty="id" >
     insert into companyinfom (companyid, companyName, servicePhone, 
       serviceTime, companyaddress, companylogo, 
-      companyQR, createTime, lastTime
-      )
+      companyQR, createTime, lastTime, 
+      detailaddress)
     values (#{companyid,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR}, #{servicephone,jdbcType=VARCHAR}, 
       #{servicetime,jdbcType=VARCHAR}, #{companyaddress,jdbcType=VARCHAR}, #{companylogo,jdbcType=VARCHAR}, 
-      #{companyqr,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
-      )
+      #{companyqr,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}, 
+      #{detailaddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sourongindex.companyinfom.domain.CompanyinfomVO" useGeneratedKeys="true" keyProperty="id" >
     insert into companyinfom
@@ -152,6 +153,9 @@
       <if test="lasttime != null" >
         lastTime,
       </if>
+      <if test="detailaddress != null" >
+        detailaddress,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="companyid != null" >
@@ -180,6 +184,9 @@
       </if>
       <if test="lasttime != null" >
         #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailaddress != null" >
+        #{detailaddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -219,6 +226,9 @@
       <if test="record.lasttime != null" >
         lastTime = #{record.lasttime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.detailaddress != null" >
+        detailaddress = #{record.detailaddress,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,7 +244,8 @@
       companylogo = #{record.companylogo,jdbcType=VARCHAR},
       companyQR = #{record.companyqr,jdbcType=VARCHAR},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
-      lastTime = #{record.lasttime,jdbcType=TIMESTAMP}
+      lastTime = #{record.lasttime,jdbcType=TIMESTAMP},
+      detailaddress = #{record.detailaddress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -266,6 +277,9 @@
       <if test="lasttime != null" >
         lastTime = #{lasttime,jdbcType=TIMESTAMP},
       </if>
+      <if test="detailaddress != null" >
+        detailaddress = #{detailaddress,jdbcType=VARCHAR},
+      </if>
     </set>
     where companyid = #{companyid,jdbcType=INTEGER}
   </update>
@@ -278,7 +292,8 @@
       companylogo = #{companylogo,jdbcType=VARCHAR},
       companyQR = #{companyqr,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      lastTime = #{lasttime,jdbcType=TIMESTAMP}
+      lastTime = #{lasttime,jdbcType=TIMESTAMP},
+      detailaddress = #{detailaddress,jdbcType=VARCHAR}
     where companyid = #{companyid,jdbcType=INTEGER}
   </update>
 </mapper>

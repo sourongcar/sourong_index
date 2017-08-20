@@ -4,15 +4,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>车型编辑页面</title>
+<title>轮播图编辑页面</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="${path}/resources/css/common.css" type="text/css" rel="stylesheet">
-<link href="${path}/resources/css/index.css" type="text/css" rel="stylesheet">
-<link href="${path}/resources/assets/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-
+<%@ include file="/WEB-INF/pages/common/rs_css.jsp"%>
 </head>
 <body>
-
 <div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
@@ -64,7 +60,6 @@
 		} 
 	
 		</script>
-<script type="text/javascript" src="${path}/resources/assets/js/jquery-3.2.1.min.js"></script>	
-<script type="text/javascript" src="${path}/resources/assets/js/bootstrap.min.js"></script>		
+	
 </body>
 </html>

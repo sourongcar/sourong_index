@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>xxx列表</title>
+<title>轮播图列表</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="/WEB-INF/pages/common/rs_css.jsp"%>
 <style type="text/css">
@@ -17,7 +17,7 @@
 			<div>
 				
 				<a  href="${path }/banner/edit.action" class="btn btn-primary" id="add">新增</a>
-				<a href="${path }/consultant/tohtml.action" class="btn btn-primary">生成新的页面</a>
+				<a href="${path }/create/html.action.action" class="btn btn-primary">生成新的页面</a>
 			</div>
 			<div class="table-responsive">
 				<table id="mydatatables"
@@ -141,17 +141,13 @@
 				mydatatables.ajax.reload();
 			});
 			
-			$("#xxx").keydown(function(e) {
-				if(e.keyCode==13){
-					mydatatables.ajax.reload();
-				}
-			});
+			
 
 		});
 		
-		function del(id){
+		function del(bannerid){
 			if(window.confirm("你确定要删除？")){
-				$.getJSON("${path }/banner/rest/doDelete.action?id="+id,
+				$.getJSON("${path }/banner/rest/doDelete.action?bannerid="+bannerid,
 							function(data){
 						alert(data.msg);
 						if(data.status==1){

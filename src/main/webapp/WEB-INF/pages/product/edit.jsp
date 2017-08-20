@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>xx编辑页面</title>
+<title>产品概况编辑页面</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="/WEB-INF/pages/common/rs_css.jsp"%>
 <body>
@@ -12,51 +12,34 @@
 <div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-	<form class="form-horizontal" role="form" action="${path }/product/doEdit.action" method="post">
-	<input type="hidden" name="id" value="${entity.id }">
-	<div class="form-group">
-		<label for="productid" class="col-sm-2 control-label">productid</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="productid" name="productid" value="productid"
-				   placeholder="请输入productid">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="productname" class="col-sm-2 control-label">productname</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="productname" name="productname" value="productname"
-				   placeholder="请输入productname">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="productintro" class="col-sm-2 control-label">productintro</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="productintro" name="productintro" value="productintro"
-				   placeholder="请输入productintro">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="icon" class="col-sm-2 control-label">icon</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="icon" name="icon" value="icon"
-				   placeholder="请输入icon">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="createtime" class="col-sm-2 control-label">createtime</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="createtime" name="createtime" value="createtime"
-				   placeholder="请输入createtime">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="lasttime" class="col-sm-2 control-label">lasttime</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="lasttime" name="lasttime" value="lasttime"
-				   placeholder="请输入lasttime">
-		</div>
-	</div>
+	<form class="form-horizontal" role="form" action="${path }/product/doEdit.action" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="productid" value="${entity.productid}">
 	
+	<div class="form-group">
+		<label for="productname" class="col-sm-2 control-label">产品名称</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="productname" name="productname" value="${entity.productname}"
+				   placeholder="请输入产品名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="productintro" class="col-sm-2 control-label">产品介绍</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="productintro" name="productintro" value="${entity.productintro}"
+				   placeholder="请输入产品介绍">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="icon" class="col-sm-2 control-label">图标</label>
+		<div class="col-sm-10">
+		<span style="display:inline;padding-left: 10px;color: #999">只允许上传图片</span>
+		<input style="display: inline;" type="file" name="pic" id="pic" onchange="previewFile()" /> 
+		</div>
+		<div class="col-sm-10" style="margin-top: 30px">
+					<img src="/img/${entity.icon}"  class="img-thumbnail" style="max-width: 500px;max-height: 500px"  alt="Image preview..."/>   
+							
+				</div> 
+	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-primary">提交</button>
@@ -69,9 +52,20 @@
 	</div>
 	<%@ include file="/WEB-INF/pages/common/rs_js.jsp"%>
 	<script type="text/javascript">
-		jQuery(function($) {
-			
-		});
+	 function previewFile() {
+		 var preview = document.querySelector('img');
+		 var file  = document.querySelector('input[type=file]').files[0];
+		 var reader = new FileReader();
+		 reader.onloadend = function () {
+		  preview.src = reader.result;
+		 }
+		 if (file) {
+		  reader.readAsDataURL(file);
+		 } else {
+		  preview.src = "";
+		 }
+		} 
+	
 	</script>
 </body>
 </html>
