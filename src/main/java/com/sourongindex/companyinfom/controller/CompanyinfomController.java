@@ -1,9 +1,14 @@
 package com.sourongindex.companyinfom.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.UUID;
-
+import java.io.FileInputStream;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,9 +48,7 @@ public class CompanyinfomController {
 		String saveImage=ConfigUtil.getValue("saveImage");
 		CompanyinfomVO covo=service.get(companyid);
 		String logo=covo.getCompanylogo();
-		if(logo!=null){
-			new File(saveImage+logo).delete();//删除原先的图片
-		}
+		
 		if(!filelogo.isEmpty()){
 			String orgname=filelogo.getOriginalFilename();
 			String savename=UUID.randomUUID()+orgname.substring(orgname.lastIndexOf("."));//保存图片的名字唯一
@@ -55,16 +58,15 @@ public class CompanyinfomController {
 			entity.setCompanylogo(savename);
 		}
 		String qr=covo.getCompanyqr();
-		if(qr!=null){
-			new File(saveImage+qr).delete();//删除原先的图片
-		}
+		
 		if(!fileqr.isEmpty()){
 			String orgname=fileqr.getOriginalFilename();
 			String savename=UUID.randomUUID()+orgname.substring(orgname.lastIndexOf("."));//保存图片的名字唯一
 			String savepath=saveImage+savename;
 			FileUtils.copyInputStreamToFile(fileqr.getInputStream(), new File(savepath));//图片存放位置
-			filelogo.transferTo(new File(savepath));
-			entity.setCompanyqr(savename);;
+			fileqr.transferTo(new File(savepath));
+			entity.setCompanyqr(savename);
+			
 		}
 		service.update(entity);
 		return "redirect:/companyinfom/list.action";//跳转到列表页面
