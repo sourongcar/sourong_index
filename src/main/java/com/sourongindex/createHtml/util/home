@@ -235,7 +235,7 @@
 					<div class="container">
 						<div class="am-u-md-6 am-text-center">
 							<h3 class="section--title" style="margin-top: 10%;font-size: 30px;">---${title}---</h3>
-							<p class="features_item--text" style="color: #969696;width:70%;text-align:center">${specificDescribe}</p>
+							<p class="features_item--text" style="margin:0 auto;color: #969696;width:70%;text-align:center">${specificDescribe}</p>
 					
 						</div>
 						<div class="am-u-md-6 am-hide-sm-only ">
@@ -258,7 +258,7 @@
 						<#list Prouducts as item>
 							<div class="am-u-md-3" style="text-align:center">
 								<div class="service_item">
-									<img src="assets/img/${item.icon}" alt="图标" />
+									<img src="assets/img/${item.icon}" alt="图标" style="width:12vh;height:11vh"/>
 									<h3 class="service_item--title">${item.productname}</h3>
 									<div class="service_item--text">
 										<p style="text-align:center">${item.productintro}</p>
