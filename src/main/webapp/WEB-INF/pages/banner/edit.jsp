@@ -24,7 +24,7 @@
 			<div class="form-group">
 				<label for="brandpic" class="col-sm-2 control-label">轮播图</label>
 				<div class="col-sm-10">
-				<span style="display:inline;padding-left: 10px;color: #999">只允许上传图片</span>
+				<span style="display:inline;padding-left: 10px;color: #999">允许上传JPG,JPEG,PNG,BMP,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jpg最适规格：1800*693</span>
 				<input style="display: inline;" type="file" name="pic" id="pic" onchange="previewFile()" /> 
 				</div>
 				<div class="col-sm-10" style="margin-top: 30px">

@@ -53,7 +53,7 @@
 	<div class="form-group">
 		<label for="companylogo" class="col-sm-2 control-label">公司logo</label>
 		<div class="col-sm-10">
-			<span style="display:inline;padding-left: 10px;color: #999">只允许上传图片</span>
+			<span style="display:inline;padding-left: 10px;color: #999">允许上传JPG,JPEG,PNG,BMP,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;png最适规格：799*180</span>
 			<input style="display: inline;" type="file" name="logopic" id="logopic" onchange="previewFile()" />
 			
 		<div class="col-sm-10" style="margin-top: 30px">
@@ -65,7 +65,7 @@
 	<div class="form-group">
 		<label for="companyqr" class="col-sm-2 control-label">公众号二维码</label>
 		<div class="col-sm-10">
-			<span style="display:inline;padding-left: 10px;color: #999">只允许上传图片</span>
+			<span style="display:inline;padding-left: 10px;color: #999">允许上传JPG,JPEG,PNG,BMP,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jpeg最适规格：240*240</span>
 			<input style="display: inline;" type="file" name="qrpic"  id="qrpic" onchange="previewFileqr()" />		
 		</div>
 		<div class="col-sm-10" style="margin-top: 30px">

@@ -213,7 +213,7 @@
 							<#list Serviceideas as item>
 								<div class="am-u-md-3">
 									<div class="features_item">
-										<img src="assets/img/${item.picname}" alt="">
+										<img src="assets/img/${item.picname}" alt="" >
 										<p class="features_item--text">										
 											${item.ideadescribe}
 										</p>
