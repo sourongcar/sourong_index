@@ -13,11 +13,11 @@ public class CreateHtml{
 
 private final Configuration config = new Configuration(
 			Configuration.VERSION_2_3_26);	
-public void exportHtml(String name,Map<String,Object> root,String outFile){
+public void exportHtml(String name,Map<String,Object> root){
 	FileWriter out=null;
 	String savehtmlpath=ConfigUtil.getValue("savehtmlpath");
 	try {
-		out=new FileWriter(savehtmlpath+outFile);
+		out=new FileWriter(savehtmlpath);
 		config.setEncoding(Locale.CHINA, "UTF-8");
 		config.setClassForTemplateLoading(CreateHtml.class,"/com/sourongindex/createHtml/util");
 		Template template=config.getTemplate(name);
